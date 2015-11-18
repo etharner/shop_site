@@ -28,18 +28,26 @@
             </div>
             {% if user.is_authenticated %}
                 <div class="head-user">
-                   <a href="{% url "userpage" %}">{{ user.username }}</a>
-                </div>
-                <div class="head-signout">
-                   <a href="{% url "logout" %}">Выход</a>
+                    <a href="{% url "userpage" %}">{{ user.username }}</a>
+                    <ul class="head-user-ext">
+                        <li><a href="">Профиль</a></li>
+                        <hr>
+                        <li><a href="">Заказы</a></li>
+                        <hr>
+                        {% if user.is_superuser %}
+                            <li><a href="">Администрирование</a></li>
+                        {% endif %}
+                        <hr>
+                        <li><a href="{% url "logout" %}">Выход</a></li>
+                    </ul>
                 </div>
             {% else %}
                 <div class="head-signin">
-                   <a href="{% url "signin" %}">Вход</a>
+                    <a href="{% url "signin" %}">Вход</a>
                 </div>
             {% endif %}
             <div class="head-cart">
-               <a href="{% url "cart" %}">Корзина</a>
+                <a href="{% url "cart" %}">Корзина</a>
             </div>
         </div>
         {% block content %}{% endblock %}
