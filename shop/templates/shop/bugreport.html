@@ -1,0 +1,34 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Нашли ошибку? Сообщите!{% endblock %}
+
+{% block style %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/base.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/catalog.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/one_string.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/bugreport.css' %}" />
+{% endblock %}
+{% block script %}
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static 'shop/js/jquery-2.1.4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'shop/js/bugreport.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <form class ="bugreport" method="post" action="/bugreport">
+        {% csrf_token %}
+        <div class="bug-label">Нашли ошибку? Сообщите!</div>
+        <div class="field">
+            <input name="bug_url" type="text" value="{{ referer_url }}" placeholder="Страница, на которой была найдена ошибка" required>
+            <textarea class="bug_desc" name="bug_desc" type="text" placeholder="Описание ошибки" required></textarea>
+            <div class="bug-label-rate">Насколько ошибка критична?</div>
+            <input type="radio" name="bug_rate" value="Я БАНКРОТ!" checked><b>Я БАНКРОТ!</b><Br>
+            <input type="radio" name="bug_rate" value="Очень желательно, мешает">Срочно исправьте, мешает<Br>
+            <input type="radio" name="bug_rate" value="Хотелось бы исправить">Хотелось бы исправить<Br>
+            <input type="radio" name="bug_rate" value="Не мешает, просто заметил">Не мешает, просто заметил<Br>
+            <input type="radio" name="bug_rate" value="Я альтруист...">Я альтруист...<Br>
+            <input class="post-bug-btn" type="submit" value="Отправить">
+        </div>
+    </form>
+{% endblock %}

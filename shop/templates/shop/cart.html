@@ -1,0 +1,61 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Корзина{% endblock %}
+
+{% block style %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/base.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/catalog.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/cart.css' %}" />
+{% endblock %}
+{% block script %}
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static 'shop/js/jquery-2.1.4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'shop/js/cart.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+     <div class="items">
+        <div class="cart-label">
+            {% if cart %}
+                Корзина
+            {% else %}
+                Ваша корзина пуста.
+            {% endif %}
+        </div>
+        {% if cart %}
+            <table class="item-list">
+                {% for item, count in cart.items %}
+                    <tr>
+                        <td><a href="/catalog/{{ item.category_id }}/{{ item.id }}">{{ item.name }}</a></td>
+                        <td class="price" default="{{ item.price }}" multiplier="{{ count }}">{{ item.price }}р.</td>
+                        <td>
+                            <div class="multiplier" data-id="{{ item.id }}">
+                                <button>+</button>
+                                <input class="mult-value" disabled="disabled" type="text" value="{{ count }}">
+                                <button>-</button>
+                            </div>
+                        </td>
+                        <td><form class="remove-from-cart" method="post" action="/cart">
+                            {% csrf_token %}
+                            <input type="hidden" name="item_id" value="{{ item.id }}">
+                            <input type="hidden" name="action" value="remove">
+                            <input class="remove-from-cart-btn" type="submit" value="">
+                        </form></td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div class="summary">
+                <div>
+                    Итого:
+                    <div class="summ-price">0р.</div>
+                </div>
+                <form class="proceed-order" method="post" action="/order">
+                    {% csrf_token %}
+                    <input type="hidden" name="post-order" value="False">
+                    <input class="proceed-order-btn" type="submit" value="Оформить заказ">
+                </form>
+            </div>
+        {% endif %}
+     </div>
+{% endblock %}

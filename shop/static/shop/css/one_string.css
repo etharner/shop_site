@@ -1,0 +1,37 @@
+body, input, textarea {
+    color: #555;
+    font-size: 14px;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+input, button, textarea {
+    outline: none;
+}
+
+.address, .bugreport {
+    width: 485px;
+    margin: 40px auto 0;
+    padding: 10px;
+    border: 1px solid rgb(210, 100, 100);
+    background-color: white;
+}
+
+.field {
+    margin-bottom: 10px;
+    padding: 0;
+}
+
+.field .group-name {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.field input  {
+    margin: 1px;
+    padding: 0 7px;
+    height: 3em;
+    width: 470px;
+    font-size: 20px;
+    border: 1px solid rgb(210, 100, 100);
+    color: black;
+}

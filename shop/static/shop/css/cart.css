@@ -1,0 +1,85 @@
+.items {
+    position: relative;
+    margin-bottom: 100px;
+    top: 40px;
+}
+
+.cart-label {
+    position: relative;
+    margin: 0 auto;
+    top: -20px;
+    width: 700px;
+    line-height: 1px;
+    text-align: center;
+    font-size: 30px;
+}
+
+.multiplier {
+    width: 100px;
+}
+
+.multiplier button, .summary button {
+    float: left;
+    width: 30px;
+    height: 30px;
+    border: 1px solid rgb(210, 100, 100);
+    outline: none;
+    font-size: 20px;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
+
+.multiplier input {
+    float: left;
+    width: 30px;
+    height: 26px;
+    text-align: center;
+    border: 1px solid rgb(210, 100, 100);
+    background-color: white;
+}
+
+.remove-from-cart-btn {
+    border: 0 none;
+    outline: none;
+    padding-left:30px;
+    width: 40px;
+    height: 40px;
+    background: url(../img/cancel.png) no-repeat red;
+    background-size: 40px 40px;
+    cursor: pointer;
+}
+
+.summary {
+    position: absolute;
+    margin: 0 auto;
+    margin-top: 10px;
+    width: 698px;
+    height: 45px;
+    border: 1px solid rgb(210, 100, 100);
+}
+
+.summary div {
+    float: left;
+
+}
+
+.summary .summ-price {
+    float: none;
+}
+
+.proceed-order {
+    position: absolute;
+    float: none;
+    left: 490px;
+    top: 8px;
+}
+
+.proceed-order-btn {
+    width: 200px;
+    border: 1px solid rgb(210, 100, 100);
+    outline: none;
+    font-size: 20px;
+    background-color: white;
+    cursor: pointer;
+}

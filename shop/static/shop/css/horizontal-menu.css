@@ -1,0 +1,8 @@
+.menu li:hover > ul {
+    display: block;
+}
+
+.menu li {
+    display: inline-block;
+    text-align: center;
+}

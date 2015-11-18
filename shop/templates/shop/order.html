@@ -1,0 +1,46 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Данные заказа{% endblock %}
+
+{% block style %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/base.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/catalog.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/jquery.kladr.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/one_string.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/order.css' %}" />
+{% endblock %}
+{% block script %}
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static 'shop/js/jquery-2.1.4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'shop/js/jquery.kladr.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'shop/js/one_string.js' %}"></script>
+
+{% endblock %}
+
+{% block content %}
+    {% if force_access == True %}
+        <div class="force-access">
+                Запрашиваемая страница не найдена
+        </div>
+    {% else %}
+        {% if prev_posted == True %}
+            <div class="order-complete">
+                Ваш заказ успешно отправлен!
+            </div>
+        {% else %}
+            <form class ="address" method="post" action="/order">
+            {% csrf_token %}
+            <input type="hidden" name="post_order" value="True">
+            <div class="order-label">Данные заказа:</div>
+            <div class="field">
+                <input name="first_name" type="text" value="" placeholder="Имя" required>
+                <input name="last_name" type="text" value="" placeholder="Фамилия" required>
+                <input name="email" type="text" value="" placeholder="Электронная почта" required>
+                <input name="address" type="text" value="" placeholder="Адрес" required>
+                <input class="post-order-btn" type="submit" value="Отправить заказ" required>
+            </div>
+        </form>
+        {% endif %}
+    {% endif %}
+{% endblock %}

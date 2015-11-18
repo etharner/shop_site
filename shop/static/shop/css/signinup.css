@@ -1,0 +1,74 @@
+.signinup {
+    position: relative;
+    margin: 0 auto;
+    margin-top: 20px;
+    width: 300px;
+    height: 300px;
+    border: 1px solid rgb(210, 100, 100);
+}
+
+.signin, .signup {
+    position: absolute;
+    float: left;
+    top: 20px;
+    width: 300px;
+    height: 30px;
+    text-align: center;
+    font-size: 20px;
+    color: black;
+}
+
+.not-reg {
+    position: absolute;
+    top: 240px;
+    left: 22px;
+    width: 260px;
+    height: 30px;
+    text-align: center;
+    border: 1px solid rgb(210, 100, 100);
+}
+
+.not-reg a {
+    vertical-align: middle;
+    font-size: 20px;
+    text-decoration: none;
+    color: black;
+}
+
+.signup:hover {
+    cursor: hand;
+}
+
+.signin-form, .signup-form {
+    position: absolute;
+    left: 50px;
+    top: 50px;
+    width: 150px;
+
+    color: black;
+}
+
+.signin-form input, .signup-form input {
+    width: 200px;
+    height: 30px;
+    border: 1px solid rgb(210, 100, 100);
+    outline: none;
+    font-size: 17px;
+    color: black;
+    cursor: pointer;
+    background-color: white;
+}
+
+.helptext {
+    display: none;
+}
+
+label {
+    display: none;
+}
+
+.errorlist {
+    position: absolute;
+    left: 230px;
+    color: red;
+}

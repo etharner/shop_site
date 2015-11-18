@@ -1,0 +1,9 @@
+<li><a href="{% url "catalog" category.id %}">{{ category.name }}</a>
+    {% if category.content %}
+        <ul>
+         {% for child_category in category.content %}
+             {% include "shop/category_list.html" with category=child_category %}
+         {% endfor %}
+         </ul>
+    {% endif %}
+</li>

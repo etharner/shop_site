@@ -1,0 +1,35 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block style %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/base.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/signinup.css' %}" />
+{% endblock %}
+{% block script %}
+    {% load staticfiles %}
+    <script src="{% static 'shop/js/jquery-2.1.4.min.js' %}"></script>
+    <script src="{% static 'shop/js/signinup.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="force-access">
+            Запрашиваемая страница не найдена
+        </div>
+    {% else  %}
+        <div class="signinup">
+            <div class="signup">
+                Регистрация
+            </div>
+
+            <form class="signup-form" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <p><input type="submit" value="Зарегистрироваться"></p>
+            </form>
+        </div>
+    {% endif %}
+
+{% endblock %}

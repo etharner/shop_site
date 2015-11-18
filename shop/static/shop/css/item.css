@@ -1,0 +1,14 @@
+.item-name {
+    position: relative;
+    margin: 0 auto;
+    top: -30px;
+    width: 700px;
+    text-align: center;
+    font-size: 30px;
+}
+
+.desc-list {
+    position: relative;
+    margin: 0 auto;
+    border-collapse: collapse;
+}

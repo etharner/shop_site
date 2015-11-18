@@ -1,0 +1,50 @@
+{% extends "shop/base.html" %}
+
+{% block title %}{{ item.name }}{% endblock %}
+
+{% block style %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/base.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/menu.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/vertical-menu.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/catalog.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/item.css' %}" />
+    <link rel="alternate stylesheet" title="horizontal" type="text/css" href="{% static 'shop/css/horizontal-menu.css' %}">
+{% endblock %}
+{% block script %}
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static 'shop/js/jquery-2.1.4.min.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="catalog-list">
+        <nav class="menu">
+        {% if categories %}
+    	    <ul>
+    	    {% for category in categories %}
+    		    {% include "shop/category_list.html" %}
+    	    {% endfor %}
+        	</ul>
+        {% else %}
+            <p>Не найдено товаров по вашему запросу.</p>
+        {% endif %}
+        </nav>
+    </div>
+
+    <div class="items">
+        <div class="item-name">
+            {{ item.name }}
+        </div>
+        {% if desc %}
+            <table class="desc-list">
+                <ul>
+                    {% for desc_item in desc %}
+                        <li>{{ desc_item }}</li>
+                    {% endfor %}
+                </ul>
+            </table>
+        {% else %}
+            Не найдено описание товара
+        {% endif %}
+    </div>
+{% endblock %}

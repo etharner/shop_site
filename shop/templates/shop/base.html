@@ -1,0 +1,55 @@
+{% load staticfiles %}
+<!doctype html>
+<html>
+	<head>
+		<title>{% block title %}{% endblock %}</title>
+        {% block style %}<link rel="stylesheet" type="text/css" href="{% static 'shop/css/base.css' %}"/>{% endblock %}
+        {% block script %}
+            {% load staticfiles %}
+            <script type="text/javascript" src="{% static 'shop/js/jquery-2.1.4.min.js' %}"></script>
+        {% endblock %}
+	</head>
+
+	<body>
+        <div class="site-head">
+            <div class="search-form">
+                <form class="search" method="get" action="/search">
+                    <input type="submit" value="Поиск">
+                    <input type="search" name="s" value="{{ request.GET.s }}">
+                </form>
+            </div>
+            <div class="head-catalog">
+                <a href="{% url "catalog" %}">Каталог</a>
+            </div>
+            <div class="head-bugreport">
+               <a href="{% url "bugreport" %}" title="Нашли ошибку? Сообщите!">
+                   <img class="head-bugreport-img" src="{% static 'shop/img/bug.png' %}" width="26" height="26">
+               </a>
+            </div>
+            {% if user.is_authenticated %}
+                <div class="head-user">
+                   <a href="{% url "userpage" %}">{{ user.username }}</a>
+                </div>
+                <div class="head-signout">
+                   <a href="{% url "logout" %}">Выход</a>
+                </div>
+            {% else %}
+                <div class="head-signin">
+                   <a href="{% url "signin" %}">Вход</a>
+                </div>
+            {% endif %}
+            <div class="head-cart">
+               <a href="{% url "cart" %}">Корзина</a>
+            </div>
+        </div>
+        {% block content %}{% endblock %}
+        <div class="site-foot">
+            <div>
+                <p>Разработка сайта</p>
+                <p>Костин Дмитрий</p>
+                <p>Группа Б8303а</p>
+                <p>2015г.</p>
+            </div>
+        </div>
+	</body>
+</html>

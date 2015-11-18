@@ -1,0 +1,84 @@
+.items {
+    position: relative;
+    margin: 0 auto;
+    top: -200px;
+    width: 700px;
+
+    font-size: 20px;
+    color: black;
+}
+
+.category-name {
+    position: relative;
+    margin: 0 auto;
+    top: -30px;
+    width: 700px;
+    line-height: 1px;
+    text-align: center;
+    font-size: 30px;
+}
+
+.item-list {
+    position: relative;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+.item-list tr td {
+    border: 0;
+    padding: 5px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.item-list tr td.price {
+    text-align: left;
+}
+
+.item-list tr td a {
+    text-decoration: none;
+    color: black;
+}
+
+.item-list tr {
+    border: 1px solid rgb(210, 100, 100)/*rgb(46,95,122)*/;
+}
+
+.catalog-item {
+    text-decoration: none;
+    color: black;
+}
+
+.add-to-cart {
+    width: 90px;
+}
+
+.add-to-cart-btn, .add-to-cart-btn-clicked, .add-to-compare-btn {
+    float: left;
+    margin-left: 5px;
+    border: 0 none;
+    outline: none;
+    padding-left:30px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.add-to-cart-btn {
+    background: url(../img/cart.gif) no-repeat;
+    background-size: 40px 40px;
+    background-color: orangered;
+}
+
+.add-to-cart-btn-clicked {
+    background: url(../img/ok.png) no-repeat;
+    background-size: 40px 40px;
+    background-color: green;
+}
+
+.add-to-compare-btn {
+    background: url(../img/compare.gif) no-repeat;
+    background-size: 40px 40px;
+    background-color: blue;
+}
+

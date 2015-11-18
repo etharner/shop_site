@@ -1,0 +1,37 @@
+.catalog-list {
+    width: 1000px;
+}
+
+.menu, .menu ul, .menu li {
+    margin: 0;
+    padding: 0;
+}
+
+.menu, .menu ul {
+    background: rgb(210, 100, 100);
+}
+
+.menu {
+    position: relative;
+    display: table;
+}
+
+.menu li > ul {
+    display: none;
+    z-index: 5;
+}
+
+.menu a {
+    display: block;
+    padding: 3px 0;
+    color: white;
+    text-decoration: none;
+}
+
+.menu ul a {
+    padding: 3px 15px;
+}
+
+.menu li:hover {
+    background: rgb(250, 100, 100);
+}

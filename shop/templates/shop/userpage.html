@@ -1,0 +1,24 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Страница {{ user.username }}{% endblock %}
+
+{% block style %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/base.css' %}" />
+{% endblock %}
+{% block script %}
+    {% load staticfiles %}
+    <script src="{% static 'shop/js/jquery-2.1.4.min.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="force-access">
+            Запрашиваемая страница не найдена
+        </div>
+    {% else  %}
+        <div class="signinup">
+            Hello, {{ user.username }}!
+        </div>
+    {% endif %}
+{% endblock %}

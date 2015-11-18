@@ -1,0 +1,25 @@
+.order-label {
+    margin: 0 auto;
+    margin-bottom: 5px;
+    width: 242px;
+    font-size: 30px;
+}
+
+.field input.post-order-btn {
+    width: 486px;
+    border: 1px solid rgb(210, 100, 100);;
+    outline: none;
+    font-size: 20px;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
+
+.order-complete {
+    position: inherit;
+    margin: 0 auto;
+    left: 70px;
+    width: 600px;
+    font-size: 30px;
+    color: green;
+}

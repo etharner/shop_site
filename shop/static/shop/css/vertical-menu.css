@@ -1,0 +1,23 @@
+.menu li:hover > ul {
+    display: block;
+    margin-left: 50px;
+    position: absolute;
+    z-index: 5;
+}
+
+.menu li {
+    display: block;
+    border-color: rgb(160, 60, 60);
+    border-style: solid;
+    border-width: 2px 2px 0 2px;
+    text-align: left;
+    width: 200px;
+}
+
+.menu ul:first-child > li:first-child {
+    border-top-width: 0;
+}
+
+.menu li:last-child {
+    border-bottom-width: 2px;
+}

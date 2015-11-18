@@ -1,0 +1,74 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Каталог{% endblock %}
+
+{% block style %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/base.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/menu.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/vertical-menu.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/catalog.css' %}" />
+    <link rel="alternate stylesheet" title="horizontal" type="text/css" href="{% static 'shop/css/horizontal-menu.css' %}">
+{% endblock %}
+{% block script %}
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static 'shop/js/jquery-2.1.4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'shop/js/catalog.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="catalog-list">
+        <nav class="menu">
+        {% if categories %}
+    	    <ul>
+    	    {% for category in categories %}
+    		    {% include "shop/category_list.html" %}
+    	    {% endfor %}
+        	</ul>
+        {% else %}
+            <p>Не найдено товаров по вашему запросу.</p>
+        {% endif %}
+        </nav>
+    </div>
+
+    <div class="items">
+        <div class="category-name">
+            {% if current_category == 'search' %}
+                    Результаты поиска:
+            {% else %}
+                {% if current_category.name == None %}
+                    <p>Добро пожаловать!</p>
+                    <p>Наш ассортимент:</p>
+                {% else %}
+                    {{ current_category.name }}
+                {% endif %}
+            {% endif %}
+        </div>
+
+        {% if items %}
+            <table class="item-list" data-cart="{{ cart }}">
+                {% for item in items %}
+                    {% if item.price != None %}
+                        <tr>
+                            <td><a href="/catalog/{{ item.category_id }}/{{ item.id }}">{{ item.name }}</a></td>
+                            <td class="price">{{ item.price }}р.</td>
+                            <td><form class="add-to-cart" method="post" action="javascript:void();">
+                                {% csrf_token %}
+                                <input class="add-to-cart-btn" type="submit" title="Добавить в корзину" value="" data-id="{{ item.id }}">
+                                <input class="add-to-compare-btn" type="submit" title="Добавить к сравнению" value="" data-id="{{ item.id }}">
+                            </form></td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="3">
+                                <a href="{% url "catalog" item.id %}" class="catalog-item">{{ item.name }}</a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>Не найдено товаров по вашему запросу.</p>
+        {% endif %}
+    </div>
+{% endblock %}
