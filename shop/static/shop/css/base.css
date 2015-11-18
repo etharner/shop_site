@@ -31,7 +31,7 @@ body {
     color: white;
 }
 
-.head-catalog, .head-bugreport, .head-signin, .head-signout, .head-cart, .head-user {
+.head-catalog, .head-bugreport, .head-signin, .head-cart, .head-user {
     position: absolute;
     margin-top: -5px;
 }
@@ -40,12 +40,30 @@ body {
     margin-left: 15px;
 }
 
-.head-user {
+.head-user, .head-signin {
+    z-index: 1000;
     margin-left: 800px;
 }
 
-.head-signin, .head-signout {
-    margin-left: 950px;
+.head-user:hover ul {
+    display: block;
+}
+
+.head-user-ext {
+    display: none;
+    margin-top: 4px;
+    margin-left: -2px;
+    padding: 0;
+    width: 200px;
+    list-style: none;
+    background-color: rgb(210, 100, 100);
+    border: 1px solid rgb(160, 60, 60);
+    border-top-width: 0;
+}
+
+.head-user-ext hr {
+    margin: 0;
+    border: 1px solid rgb(160, 60, 60);
 }
 
 .head-cart {
