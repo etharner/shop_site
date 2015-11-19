@@ -8,7 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.views.generic.edit import FormView
 from django.views.generic.base import View
-from .models import Item, Category, Order, OrderItem, Bug
+from .models import Item, Category, Order, OrderItem, Bug, Profile, Comment
 import json
 import xlrd
 
@@ -21,8 +21,16 @@ def search_item(request):
     else:
         search_name = request.POST['search_item']
 
-    manage_cart(request)
-    return render(request, 'shop/catalog.html', {'categories': parse_categories()[0]['content'], 'current_category': 'search', 'items': Item.objects.filter(name__contains=search_name), 'cart': json.dumps(request.session['cart'])})
+    if 'comp' not in request.session:
+        request.session['comp'] = []
+
+    if request.method == 'POST':
+        if request.POST['type'] == 'cart':
+            manage_cart(request)
+        else:
+            manage_comp(request)
+
+    return render(request, 'shop/catalog.html', {'categories': parse_categories()[0]['content'], 'current_category': 'search', 'items': Item.objects.filter(name__contains=search_name), 'cart': json.dumps(request.session['cart']), 'comp': json.dumps(request.session['comp'])})
 
 class LoginFormView(FormView):
     form_class = AuthenticationForm
@@ -54,11 +62,71 @@ class RegisterFormView(FormView):
 
         return super(RegisterFormView, self).form_valid(form)
 
-def userpage(request):
-    return render(request, 'shop/userpage.html')
+def profile(request):
+    if request.method == 'POST':
+        Profile.objects.update_or_create(user_id=request.user.id, address=request.POST.get('address', ''), pay_method=request.POST.get('pay_method', ''))
+
+        u = request.user
+        u.first_name = request.POST.get('first_name', '')
+        u.last_name = request.POST.get('last_name', '')
+        u.email = request.POST.get('email', '')
+        u.save()
+
+    try:
+        p = Profile.objects.get(user_id=request.user.id)
+    except:
+        p = {'address': '', 'pay_method': ''}
+
+    return render(request, 'shop/profile.html', {'profile': p})
+
+def compare(request, category_id=0):
+    if category_id is None:
+        category_id = 0
+
+    manage_comp(request)
+    items = Item.objects.filter(id__in=request.session['comp'])
+    categories = []
+    if category_id == 0:
+        for item in items:
+            if item.category_id not in categories:
+                categories.append(item.category_id)
+        if (len(categories) == 0):
+            return render(request, 'shop/compare.html', {'mode': 'none'})
+        if (len(categories) > 1):
+            return render(request, 'shop/compare.html', {'mode': 'cat_list', 'categories': Category.objects.filter(id__in=categories)})
+        if (len(categories) == 1):
+            compare(request, categories[0])
+            return render(request, 'shop/compare.html')
+
+    cat_items = []
+    items = Item.objects.filter(id__in=request.session['comp'])
+    for item in items:
+        if str(item.category_id) == str(category_id):
+            cat_items.append(item)
+
+    descs = {}
+    max_size = 0
+    for item in cat_items:
+        split_desc = item.desc.split(', ')
+        if (len(split_desc) > max_size):
+            max_size = len(split_desc)
+        descs[item.name] = split_desc
+
+    descs_arr = []
+    for i in range(max_size):
+        descs_i = []
+        for item in cat_items:
+            if i >= len(descs[item.name]):
+                curr_desc = ''
+            else:
+                curr_desc = descs[item.name][i]
+            descs_i.append(curr_desc)
+        descs_arr.append(descs_i)
+        descs_i = []
+
+    return render(request, 'shop/compare.html', {'items': cat_items, 'descs': descs_arr})
 
 def cart(request):
-    print(request.GET)
     manage_cart(request)
 
     return render(request, 'shop/cart.html', {'cart': {Item.objects.get(id=int(key)): value for key, value in request.session['cart'].items()}})
@@ -67,7 +135,19 @@ def catalog(request, category_id=0):
     if category_id is None:
         category_id = 0
 
-    manage_cart(request)
+    if 'comp' not in request.session:
+        request.session['comp'] = []
+
+    if request.method == 'POST':
+       if request.POST['type'] == 'cart':
+           manage_cart(request)
+       else:
+           manage_comp(request)
+    else:
+        if 'cart' not in request.session:
+            request.session['cart'] = {}
+        if 'comp' not in request.session:
+            request.session['comp'] = []
 
     items = []
 
@@ -82,21 +162,29 @@ def catalog(request, category_id=0):
     if len(items) == 0:
         items = Item.objects.filter(category=category_id)
 
-    return render(request, 'shop/catalog.html', {'categories': parse_categories()[0]['content'], 'current_category': cur_category, 'items': items, 'cart': json.dumps(request.session['cart'])})
+    return render(request, 'shop/catalog.html', {'categories': parse_categories()[0]['content'], 'current_category': cur_category, 'items': items, 'cart': json.dumps(request.session['cart']), 'comp': json.dumps(request.session['comp'])})
 
 def item(request, category_id, item_id):
-    manage_cart(request)
+    users = []
+    if request.method == 'POST':
+        c = Comment(
+            user_id=request.user.id,
+            item_id=item_id, comment=request.POST['comment'], rating=request.POST['item_rate'])
+        c.save()
+        #users.append(User.objects.get(id=request.user))
+
+    #manage_cart(request)
 
     item = Item.objects.get(id=item_id)
     desc = item.desc.split(', ')
     if desc[0] == '':
         desc = None
-    print(desc)
 
-    return render(request, 'shop/item.html', {'categories': parse_categories()[0]['content'], 'item': item, 'desc': desc, 'cart': request.session['cart']})
+    return render(request, 'shop/item.html', {
+        'categories': parse_categories()[0]['content'], 'item': item,
+        'desc': desc, 'cart': request.session['cart'], 'comm': Comment.objects.filter(item_id=item_id)})
 
 def order(request):
-    print(request.POST)
     force_access = False
     if request.method == 'GET':
         if request.session['prev_posted'] == False:
@@ -108,7 +196,8 @@ def order(request):
             last_name = request.POST['last_name']
             email = request.POST['email']
             address = request.POST['address']
-            o = Order(first_name=first_name, last_name=last_name, email=email, address=address)
+            pay_method = request.POST['pay_method']
+            o = Order(first_name=first_name, last_name=last_name, email=email, address=address, pay_method=pay_method)
             o.save()
             for item, count in request.session['cart'].items():
                 oi = OrderItem(count=int(count))
@@ -118,7 +207,12 @@ def order(request):
             request.session['prev_posted'] = True
             request.session['cart'] = {}
 
-    return render(request, 'shop/order.html', {'categories': parse_categories()[0]['content'], 'cart': request.session['cart'], 'prev_posted': request.session['prev_posted'], 'force_access': force_access})
+    try:
+        p = Profile.objects.get(user_id=request.user.id)
+    except:
+        p = {'address': '', 'pay_method': ''}
+
+    return render(request, 'shop/order.html', {'categories': parse_categories()[0]['content'], 'cart': request.session['cart'], 'profile': p, 'prev_posted': request.session['prev_posted'], 'force_access': force_access})
 
 def bugreport(request):
     if 'HTTP_REFERER' not in request.META:
@@ -153,6 +247,23 @@ def manage_cart(request):
         elif request.POST['action'] == 'change_count':
             cart[request.POST['item_id']] = request.POST['new_count']
             request.session.modified = True
+    print(request.session['comp'])
+
+def manage_comp(request):
+    if 'comp' not in request.session:
+        request.session['comp'] = []
+
+    comp = request.session['comp']
+
+    if request.method == 'POST':
+        if request.POST['action'] == 'add':
+            comp.append(request.POST['item_id'])
+            request.session.modified = True
+        elif request.POST['action'] == 'remove':
+            if comp:
+                if request.POST['item_id'] in comp:
+                    comp.remove(request.POST['item_id'])
+                    request.session.modified = True
 
 def parse_categories():
     categories = [{'id': None, 'name': None, 'content': []} for i in range(len(Category.objects.all()) + 1)]

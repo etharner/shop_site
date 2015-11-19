@@ -15,7 +15,7 @@
     <script type="text/javascript" src="{% static 'shop/js/jquery-2.1.4.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'shop/js/jquery.kladr.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'shop/js/one_string.js' %}"></script>
-
+    <script type="text/javascript" src="{% static 'shop/js/order.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -34,10 +34,16 @@
             <input type="hidden" name="post_order" value="True">
             <div class="order-label">Данные заказа:</div>
             <div class="field">
-                <input name="first_name" type="text" value="" placeholder="Имя" required>
-                <input name="last_name" type="text" value="" placeholder="Фамилия" required>
-                <input name="email" type="text" value="" placeholder="Электронная почта" required>
-                <input name="address" type="text" value="" placeholder="Адрес" required>
+                <input name="first_name" type="text" value="{{ user.first_name }}" placeholder="Имя" required>
+                <input name="last_name" type="text" value="{{ user.last_name }}" placeholder="Фамилия" required>
+                <input name="email" type="text" value="{{ user.email }}" placeholder="Электронная почта" required>
+                <input name="address" type="text" value="{{ profile.address }}" placeholder="Адрес" required>
+                <select class="pay_method" name="pay_method" method="{{ profile.pay_method }}">
+                    <option selected disabled>Способ оплаты</option>
+                    <option>WebMoney</option>
+                    <option>Яндекс.Деньги</option>
+                    <option>Наличный расчёт</option>
+                </select>
                 <input class="post-order-btn" type="submit" value="Отправить заказ" required>
             </div>
         </form>

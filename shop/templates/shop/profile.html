@@ -1,0 +1,42 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Страница {{ user.username }}{% endblock %}
+
+{% block style %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/base.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/profile.css' %}" />
+{% endblock %}
+{% block script %}
+    {% load staticfiles %}
+    <script src="{% static 'shop/js/jquery-2.1.4.min.js' %}"></script>
+    <script src="{% static 'shop/js/jquery.kladr.min.js' %}"></script>
+    <script src="{% static 'shop/js/one_string.js' %}"></script>
+    <script src="{% static 'shop/js/profile.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <form class ="profile" method="post" action="{% url 'profile' %}">
+            {% csrf_token %}
+            <div class="profile-label">Профиль пользователя</div>
+            <div class="field">
+                <input name="first_name" type="text" value="{{ user.first_name }}" placeholder="Имя">
+                <input name="last_name" type="text" value="{{ user.last_name }}" placeholder="Фамилия">
+                <input name="email" type="text" value="{{ user.email }}" placeholder="Электронная почта">
+                <input name="address" type="text" value="{{ profile.address }}" placeholder="Адрес">
+                <select class="pay_method" name="pay_method" method="{{ profile.pay_method }}">
+                    <option selected disabled>Способ оплаты</option>
+                    <option>WebMoney</option>
+                    <option>Яндекс.Деньги</option>
+                    <option>Наличный расчёт</option>
+                </select>
+                <input class="post-profile-btn" type="submit" value="Обновить профиль">
+            </div>
+        </form>
+    {% else  %}
+        <div class="force-access">
+            Запрашиваемая страница не найдена
+        </div>
+    {% endif %}
+{% endblock %}

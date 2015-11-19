@@ -34,7 +34,7 @@ $(document).ready(function() {
             action = "add";
         }
 
-        if ((match = window.location.href.match(/\?s=(.*)/)) == [])
+        if (!(match = window.location.href.match(/\?s=(.*)/)))
             search_item = "";
         else
             search_item = match[1];
@@ -44,6 +44,7 @@ $(document).ready(function() {
             url: window.location.pathname,
             data: {
                 item_id: $(this).data("id"),
+                type: "cart",
                 action: action,
                 search_item: search_item,
                 csrfmiddlewaretoken: csrftoken
@@ -54,6 +55,55 @@ $(document).ready(function() {
                     $(e.target).removeClass("add-to-cart-btn-clicked");
                 } else {
                     $(e.target).addClass("add-to-cart-btn-clicked");
+                }
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        });
+    });
+
+    $(".add-to-compare-btn").each(function(i, elem) {
+        var itemId = $(elem).data("id");
+
+        var comp = $(".item-list").data("comp");
+
+        if (comp.indexOf(String(itemId)) != -1) {
+            $(elem).addClass("add-to-compare-btn-clicked");
+        } else {
+            $(elem).removeClass("add-to-compare-btn-clicked");
+        }
+
+    }).click(function(e) {
+        if ($(this).hasClass("add-to-compare-btn-clicked")) {
+            action = "remove";
+        } else {
+            action = "add";
+        }
+
+        if (!(match = window.location.href.match(/\?s=(.*)/)))
+            search_item = "";
+        else
+            search_item = match[1];
+
+        $.ajax({
+            type: "POST",
+            url: window.location.pathname,
+            data: {
+                item_id: $(this).data("id"),
+                type: "compare",
+                action: action,
+                search_item: search_item,
+                csrfmiddlewaretoken: csrftoken
+            },
+            success: function (data) {
+                console.log(data);
+                if (action == "remove") {
+                    $(e.target).removeClass("add-to-compare-btn-clicked");
+                } else {
+                    $(e.target).addClass("add-to-compare-btn-clicked");
                 }
 
             },

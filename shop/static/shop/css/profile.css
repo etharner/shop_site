@@ -1,0 +1,45 @@
+.profile {
+    width: 485px;
+    margin: 40px auto 0;
+    padding: 10px;
+    border: 1px solid rgb(210, 100, 100);
+    background-color: white;
+}
+
+.profile-label {
+    margin: 0 auto;
+    margin-bottom: 5px;
+    width: 400px;
+    text-align: center;
+    font-size: 30px;
+    color: black;
+}
+
+.field {
+    margin-bottom: 10px;
+    padding: 0;
+}
+
+.field input, .field select {
+    margin: 1px;
+    padding: 0 7px;
+    height: 3em;
+    width: 470px;
+    font-size: 20px;
+    border: 1px solid rgb(210, 100, 100);
+    color: black;
+}
+
+.field select {
+    width: 486px;
+}
+
+.field input.post-profile-btn {
+    width: 486px;
+    border: 1px solid rgb(210, 100, 100);;
+    outline: none;
+    font-size: 20px;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}

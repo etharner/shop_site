@@ -28,16 +28,16 @@
             </div>
             {% if user.is_authenticated %}
                 <div class="head-user">
-                    <a href="{% url "userpage" %}">{{ user.username }}</a>
+                    <div class="head-username">{{ user.username }}</div>
                     <ul class="head-user-ext">
-                        <li><a href="">Профиль</a></li>
+                        <li><a href="{% url "profile" %}">Профиль</a></li>
                         <hr>
                         <li><a href="">Заказы</a></li>
                         <hr>
                         {% if user.is_superuser %}
                             <li><a href="">Администрирование</a></li>
+                            <hr>
                         {% endif %}
-                        <hr>
                         <li><a href="{% url "logout" %}">Выход</a></li>
                     </ul>
                 </div>
@@ -46,6 +46,9 @@
                     <a href="{% url "signin" %}">Вход</a>
                 </div>
             {% endif %}
+            <div class="head-comp">
+                <a href="{% url "compare" %}">Сравнить</a>
+            </div>
             <div class="head-cart">
                 <a href="{% url "cart" %}">Корзина</a>
             </div>

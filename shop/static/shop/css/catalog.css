@@ -53,7 +53,7 @@
     width: 90px;
 }
 
-.add-to-cart-btn, .add-to-cart-btn-clicked, .add-to-compare-btn {
+.add-to-cart-btn, .add-to-cart-btn-clicked, .add-to-compare-btn, .add-to-compare-btn-clicked {
     float: left;
     margin-left: 5px;
     border: 0 none;
@@ -79,6 +79,12 @@
 .add-to-compare-btn {
     background: url(../img/compare.gif) no-repeat;
     background-size: 40px 40px;
-    background-color: blue;
+    background-color: grey;
+}
+
+.add-to-compare-btn-clicked {
+    background: url(../img/compare-click.gif) no-repeat;
+    background-size: 40px 40px;
+    background-color: deepskyblue;
 }
 

@@ -1,0 +1,61 @@
+{% extends "shop/base.html" %}
+
+{% block title %}{{ item.name }}{% endblock %}
+
+{% block style %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/base.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/menu.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/compare.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/catalog.css' %}" />
+{% endblock %}
+{% block script %}
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static 'shop/js/jquery-2.1.4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'shop/js/compare.js' %}"></script>
+    <script type="text/javascript" src="{% static 'shop/js/catalog.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    {% if mode == 'none' %}
+        <div class="compare-label">
+            Добавьте товары для сравнения.
+        </div>
+    {% elif mode == 'cat_list' %}
+        <div class="compare-label">
+            Пожалуйста, выберите категорию
+        </div>
+        <ul class="cat-list">
+            {% for cat in categories %}
+                <li><a href="/compare/{{ cat.id }}">{{ cat.name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="compare-label">
+            Сравнение товаров
+        </div>
+        <div class="compare-list">
+            {% for item in items %}
+                <div class="item-div">
+                    <div class="item-name">{{ item.name }}</div>
+                    <div class="item-price">Цена: {{ item.price }}р.</div>
+                    <form class="add-to-cart" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="remove">
+                        <input type="hidden" name="item_id" value="{{ item.id }}">
+                        <input class="delete-from-cmp-btn" type="submit" name="del" title="Убрать из сравнения" value="Убрать из сравнения">
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+        <table class="compare-table">
+            {% for desc in descs %}
+                <tr class="item-div">
+                    {% for item in desc %}
+                        <td>{{ item }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}

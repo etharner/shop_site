@@ -26,7 +26,7 @@
     	    {% endfor %}
         	</ul>
         {% else %}
-            <p>Не найдено товаров по вашему запросу.</p>
+            <p>Категорий нет.</p>
         {% endif %}
         </nav>
     </div>
@@ -46,7 +46,7 @@
         </div>
 
         {% if items %}
-            <table class="item-list" data-cart="{{ cart }}">
+            <table class="item-list" data-cart="{{ cart }}" data-comp="{{ comp }}">
                 {% for item in items %}
                     {% if item.price != None %}
                         <tr>

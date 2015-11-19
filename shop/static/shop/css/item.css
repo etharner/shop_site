@@ -12,3 +12,48 @@
     margin: 0 auto;
     border-collapse: collapse;
 }
+
+textarea {
+    margin: 1px;
+    margin-bottom: 10px;
+    padding: 0 7px;
+    width: 470px;
+    height: 100px;
+    max-width: 470px;
+    font-size: 20px;
+    border: 1px solid rgb(210, 100, 100);
+    color: black;
+    word-wrap: break-word;
+}
+
+.post-comment-btn {
+    margin-left: 5px;
+    margin-bottom: 10px;
+    width: 120px;
+    height: 40px;
+    border: 1px solid rgb(210, 100, 100);
+    font-size: 20px;
+    outline: none;
+    cursor: pointer;
+}
+
+.user-comm {
+    width: 700px;
+    height: 50px;
+    border: 1px solid rgb(210, 100, 100);
+}
+
+.comm {
+    float: left;
+    width: 550px;
+    height: 50px;
+    border: 1px solid rgb(210, 100, 100);
+}
+
+.comm-rate {
+    float: left;
+    width: 146px;
+    height: 50px;
+    color: black;
+    border: 1px solid rgb(210, 100, 100);
+}
